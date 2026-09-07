@@ -17,11 +17,57 @@ The ceiling function ceil(val) is the least integer greater than or equal to val
 
 // Understand the problem first:
 
-// hme aik array of int nums dia hua hy hum logo ne kuch steps perform kr ke maximum score nikalna hy. It is not too straight forward for now. I am totally cooked at this moment.
+// hme aik array of int nums dia hua hy hum logo ne kuch steps perform kr ke maximum score nikalna hy.
 
 // Approach and Solution:
 
-// Ye cheeze subh discuss kre ge.
+// Acha is me kuch cheeze hy jin se ap log pans skte hy aik ye ke in steps me jo pehla step hy wo agr ap usko dihan se dekhe hr index wo condition satisfy kr raha hy. Tu ye condition lgane ki zaroorat nahi hy. Then pir bs yahi hy ke hum max score chahie tu maximum value ko dond kr add krne ki koshih kr ge. Mene pehle two approached pure brute force se bnai hy but ye TLE de rahi hy. Lekin teesri approach heap se bnai hy.
+
+// class Solution {
+// public:
+//     long long maxKelements(vector<int>& nums, int k) {
+//         int n = nums.size();
+//         long long score = 0;
+
+//         while (k > 0) {
+//             int maximum = INT_MIN;
+//             int index = 0;
+
+//             for (int i = 0; i < n; i++) {
+//                 if (nums[i] > maximum) {
+//                     maximum = nums[i];
+//                     index = i;
+//                 }
+//             }
+
+//             score += maximum;
+//             nums[index] = ceil(nums[index] / 3.0);
+
+//             k--;
+//         }
+
+//         return score;
+//     }
+// };
+
+// class Solution {
+// public:
+//     long long maxKelements(vector<int>& nums, int k) {
+//         int n = nums.size();
+//         long long score = 0;
+
+//         while (k > 0) {
+//             sort(nums.begin(), nums.end());
+
+//             score += nums.back();
+//             nums[n  - 1] = ceil(nums[n  - 1] / 3.0);
+
+//             k--;
+//         }
+
+//         return score;
+//     }
+// };
 
 // class Solution {
 // public:
