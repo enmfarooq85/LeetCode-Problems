@@ -12,6 +12,35 @@
 
 // kl subh
 
+class Solution {
+public:
+    vector<int> sumPrefixScores(vector<string>& words) {
+        vector<string> terms;
+        vector<int> ans;
+
+        for (int word = 0; word < words.size(); word++) {
+            for (int ch = 0; ch < words[word].size(); ch++) {
+                terms.push_back(words[word].substr(0, ch + 1));
+            }
+
+            int score = 0;
+            for (int term = 0; term < terms.size(); term++) {
+                for (int word = 0; word < words.size(); word++) {
+                    for (int ch = 0; ch < words[word].size(); ch++) {
+                        if (terms[term] == words[word].substr(0, ch + 1)) {
+                            score += 1;
+                        }
+                    }
+                }
+            }
+
+            ans.push_back(score);
+            terms.clear();
+        }
+
+        return ans;
+    }
+};
 
 // class Solution {
 // public:
