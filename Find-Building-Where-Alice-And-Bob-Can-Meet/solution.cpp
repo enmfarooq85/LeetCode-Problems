@@ -8,11 +8,11 @@ You are given a 0-indexed array heights of positive integers, where heights[i] r
 
 // Understand the problem first:
 
-//
+// hme aik zero index base heights array dia gia hy aur kuch queries di gayi hu aur hr query me pehla index alice ko and dosra bob ko represent kr raha hy hmare goal ye hy ke hum no dono ko aik building pe ponchana hy lekin jaha aik bnda kada waha se age hi ja skta hy peche nahi aur ye ke uski building ki height less than honi chahie jaha pe wo dono jaye ge. Query me pehla aur dosra element index ko represent kr raha hy heights me. Agr koi aesi common building nahi milti tu ap log -1 return kre ge. Problem mushkil hy tu ap logo ko isko solve krne ke liye segment tree ke concept ane chahie.
 
 // Approach and Solution:
 
-//
+//  Straight forward approach ye hy ke ap log isko pehle brute force se hl krne ki koshih kre aur then pir segment tree ke concept ate hy tu simple ho jaye gi.
 
 // class Solution {
 // public:
@@ -131,6 +131,98 @@ You are given a 0-indexed array heights of positive integers, where heights[i] r
 //         for (int query = 0; query < queries.size(); query++) {
 //             ans.push_back(
 //                 findIndex(queries[query][0], queries[query][1], heights));
+//         }
+
+//         return ans;
+//     }
+// };
+
+// class Solution {
+// public:
+//     void buildMaxElementIndexSTree(vector<int>& sTree, vector<int> &heights, int i, int start,
+//                     int end) {
+//         if (start == end) {
+//             sTree[i] = start;
+//             return;
+//         }
+
+//         int mid = start + (end - start) / 2;
+//         buildMaxElementIndexSTree(sTree, heights, 2 * i + 1, start, mid);
+//         buildMaxElementIndexSTree(sTree, heights, 2 * i + 2, mid + 1, end);
+
+//         int leftIndex = sTree[2 * i + 1];
+//         int rightIndex = sTree[2 * i + 2];
+
+//         sTree[i] = (heights[leftIndex] >= heights[rightIndex]) ? leftIndex: rightIndex;
+//     };
+
+//     int findMaxElementIndexFromSTree(vector<int>& sTree, vector<int>& heights,
+//                                      int i, int start, int end, int queryStart,
+//                                      int queryEnd) {
+//         if (queryStart > end || queryEnd < start) {
+//             return -1;
+//         }
+
+//         if (start >= queryStart && end <= queryEnd) {
+//             return sTree[i];
+//         }
+
+//         int mid = start + (end - start) / 2;
+
+//         int leftIndex = findMaxElementIndexFromSTree(
+//             sTree, heights, 2 * i + 1, start, mid, queryStart, queryEnd);
+//         int rightIndex = findMaxElementIndexFromSTree(
+//             sTree, heights, 2 * i + 2, mid + 1, end, queryStart, queryEnd);
+
+//         if (leftIndex == -1)
+//             return rightIndex;
+//         if (rightIndex == -1)
+//             return leftIndex;
+
+//         return (heights[leftIndex] >= heights[rightIndex]) ? leftIndex
+//                                                            : rightIndex;
+//     };
+
+//     vector<int> leftmostBuildingQueries(vector<int>& heights,
+//                                         vector<vector<int>>& queries) {
+//         int n = heights.size();
+//         vector<int> sTree(4 * n, 0);
+//         buildMaxElementIndexSTree(sTree, heights, 0, 0, n - 1);
+//         vector<int> ans;
+
+//         for (int query = 0; query < queries.size(); query++) {
+//             int minIndex = min(queries[query][0], queries[query][1]);
+//             int maxIndex = max(queries[query][0], queries[query][1]);
+
+//             if (minIndex == maxIndex) {
+//                 ans.push_back(maxIndex);
+//             } else if (heights[maxIndex] > heights[minIndex]) {
+//                 ans.push_back(maxIndex);
+//             } else {
+//                 int start = maxIndex + 1;
+//                 int end = n - 1;
+//                 int bestIndex = INT_MAX;
+
+//                 while (start <= end) {
+//                     int mid = start + (end - start) / 2;
+//                     int maxElementIndex = findMaxElementIndexFromSTree(
+//                         sTree, heights, 0, 0, n - 1, start, mid);
+
+//                     if (heights[maxElementIndex] >
+//                         max(heights[minIndex], heights[maxIndex])) {
+//                         bestIndex = min(bestIndex, maxElementIndex);
+//                         end = mid - 1;
+//                     } else {
+//                         start = mid + 1;
+//                     }
+//                 }
+
+//                 if (bestIndex == INT_MAX) {
+//                     ans.push_back(-1);
+//                 } else {
+//                     ans.push_back(bestIndex);
+//                 }
+//             }
 //         }
 
 //         return ans;
