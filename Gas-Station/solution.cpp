@@ -10,4 +10,95 @@
 
 // Approach & Solution:
 
-// will discuss tomorrow.
+// Honestly, me ne is question ko teen ghanto me solve kia hy. Tu iski explanation itni simple nahi hy. Lekin me apko recommend kro ga ke MIK ki ye video dekh le. (https://www.youtube.com/watch?v=tcOcmNHFTTM). I hope code me likhe gaye comments apko help kre ge mazeed.
+
+// TLE: 35/41
+
+// class Solution {
+// public:
+//     int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+//         int n = gas.size();
+
+//         // Try each station as a potential starting point.
+//         for (int start = 0; start < n; start++) {
+//             // Skip stations that cannot reach the next station initially.
+//             if (gas[start] < cost[start])
+//                 continue;
+
+//             // Start traveling from the station immediately after the start.
+//             int current = (start + 1) % n;
+
+//             // Collect gas at the start and pay the cost to reach the next station.
+//             int remainingGas = gas[start] - cost[start] + gas[current];
+
+//             // Continue traveling until we return to the starting station.
+//             while (current != start) {
+//                 // Stop if we cannot afford the cost of reaching the next station.
+//                 if (remainingGas < cost[current])
+//                     break;
+
+//                 // Save the cost of traveling from the current station.
+//                 int travelCost = cost[current];
+
+//                 // Move to the next station, wrapping around at the end.
+//                 current = (current + 1) % n;
+
+//                 // Collect gas available at the next station.
+//                 int gasAtNextStation = gas[current];
+
+//                 // Update the tank after paying the travel cost and collecting gas.
+//                 remainingGas = remainingGas - travelCost + gasAtNextStation;
+//             }
+
+//             // If we returned to the start, the entire circuit is possible.
+//             if (current == start)
+//                 return start;
+//         }
+
+//         return -1;
+//     }
+// };
+
+// PASSED: 41/41
+
+// class Solution {
+// public:
+//     int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+//         int n = gas.size();
+
+//         // Calculate the total gas available across all stations.
+//         int totalGas = accumulate(begin(gas), end(gas), 0);
+
+//         // Calculate the total gas required to travel between all stations.
+//         int totalCost = accumulate(begin(cost), end(cost), 0);
+
+//         // If total gas is less than total cost, completing the circuit is impossible.
+//         if (totalGas < totalCost) {
+//             return -1;
+//         }
+
+//         // Track the current gas balance while testing the candidate starting station.
+//         int currentTank = 0;
+
+//         // Store the index of the current candidate starting station.
+//         int startIndex = 0;
+
+//         // Traverse every station to find a valid starting point in linear time.
+//         for (int i = 0; i < n; i++) {
+
+//             // Update the tank with the net gas gained or lost at the current station.
+//             currentTank += gas[i] - cost[i];
+
+//             // If the tank becomes negative, the current candidate cannot reach this station.
+//             if (currentTank < 0) {
+//                 // Reset the tank because the next station becomes the new candidate.
+//                 currentTank = 0;
+
+//                 // Choose the station after the failure point as the next starting candidate.
+//                 startIndex = i + 1;
+//             }
+//         }
+
+//         return startIndex;
+//     }
+// };
