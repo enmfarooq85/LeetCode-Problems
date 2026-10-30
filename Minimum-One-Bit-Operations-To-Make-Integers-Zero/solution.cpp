@@ -16,4 +16,18 @@ Return the minimum number of operations to transform n into 0.
 
 // Approach and Solution:
 
-// Is pe kl baat kre ge.
+// Really hard question and there is a mathematics behing it. I am not a good guy to explain it. Watch solutions. Don't feel demotivate & move on.
+
+// class Solution {
+// public:
+//     int minimumOneBitOperations(int n) {
+//         int operations = 0;
+
+//         while (n > 0) {
+//             operations ^= n;
+//             n >>= 1;
+//         }
+
+//         return operations;
+//     }
+// };
